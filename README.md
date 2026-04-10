@@ -2,6 +2,7 @@
 my project is a drawer lock with special dimmensions as i have a wierd drawer. it doesnt use any screws as i canot afford to drill into the drawer, so every thing is held together by adhesive strips. Baisicly it opens the latch when ever it detects any nfc source near. the range might be a bit short due to the thickness of wood.
 The reason it exists so thtai can keep my belongings secure with out going throught the trouble of having my keys lost / stolen.
 say for example any nfc card / phone can beatpped and it will open the latch. tap agin and it will close it. i have not made a whwhitle list for witch ones are allowed but if someone wants they can make that.
+
 **schematics**
 | esp32c3  | 9g SG90 |
 | ------------- | ------------- |
