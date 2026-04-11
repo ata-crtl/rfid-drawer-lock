@@ -5,7 +5,7 @@ Basically it opens the latch when ever it detects any nfc source near, the range
 The reason it exists so that i can keep my belongings secure with out going throught the trouble of having my keys lost / stolen.
 Say for example any nfc card / phone can be tapped  and it will open the latch, Tap agin and it will close it. i have not made a white list for which ones are allowed but if someone wants they can make that.
 
-**schematics**
+**SCHEMATICS**
 | esp32c3  | 9g SG90 |
 | ------------- | ------------- |
 | GND | GND |
