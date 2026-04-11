@@ -29,3 +29,8 @@ Say for example any nfc card / phone can be tapped  and it will open the latch, 
 | OUT+  | VIN - |
 | OUT-  | VIN + |
 
+<img width="1067" height="573" alt="image" src="https://github.com/user-attachments/assets/8ab7b69d-2014-4c68-9408-0677734d4523" />
+<img width="877" height="448" alt="Screenshot 2026-04-11 090117" src="https://github.com/user-attachments/assets/7f4565c1-eca5-48d5-8c2e-095fac5fc983" />
+<img width="1601" height="584" alt="Screenshot 2026-04-11 085947" src="https://github.com/user-attachments/assets/a49dd111-f78f-4d7d-a6b1-1d93e363a5a5" />
+
+
