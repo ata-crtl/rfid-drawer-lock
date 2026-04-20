@@ -6,7 +6,8 @@ The reason it exists so that i can keep my belongings secure with out going thro
 Say for example any nfc card / phone can be tapped  and it will open the latch, Tap agin and it will close it. i have not made a white list for which ones are allowed but if someone wants they can make that.
 
 PS---**To download the zine just press view in raw format**
-<img width="601" height="912" alt="image" src="https://github.com/user-attachments/assets/7ee9ba40-d45d-4b69-a4c9-1d891b0b49f8" />
+<img width="773" height="1167" alt="image" src="https://github.com/user-attachments/assets/e3a52dca-2846-4ef4-b877-243123e3f29d" />
+
 
 **All code is in micrpopython**
 **SCHEMATICS**
