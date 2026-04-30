@@ -6,6 +6,7 @@ The reason it exists so that i can keep my belongings secure with out going thro
 Say for example any nfc card / phone can be tapped  and it will open the latch, Tap agin and it will close it. i have not made a white list for which ones are allowed but if someone wants they can make that.
                      Remeber to have the nfc module up aginst the wall.
 The photos are pretty self explanetry on how to use it.
+
 onshape link = https://cad.onshape.com/documents/10ff17bd51048845f2315452/w/f69d7bc4221a2a5968c6b8fb/e/c57b2dc210264a0650e04200
 <img width="773" height="1167" alt="image" src="https://github.com/user-attachments/assets/e3a52dca-2846-4ef4-b877-243123e3f29d" />
 
