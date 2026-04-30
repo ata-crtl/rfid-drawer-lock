@@ -10,6 +10,7 @@ onshape link = https://cad.onshape.com/documents/10ff17bd51048845f2315452/w/f69d
 
 
 **All code is in micrpopython**
+
 **SCHEMATICS**
 | esp32c3  | 9g SG90 |
 | ------------- | ------------- |
