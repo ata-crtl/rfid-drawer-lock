@@ -16,7 +16,8 @@ step 4 . place the rfid componet against the drawer, but frist test to see if it
 
 
 onshape link = https://cad.onshape.com/documents/10ff17bd51048845f2315452/w/f69d7bc4221a2a5968c6b8fb/e/c57b2dc210264a0650e04200
-<img width="773" height="1167" alt="image" src="https://github.com/user-attachments/assets/e3a52dca-2846-4ef4-b877-243123e3f29d" />
+<img width="492" height="727" alt="image" src="https://github.com/user-attachments/assets/f769ca3e-cc4c-4816-a1f2-bf4635f84afb" />
+
 
 
 **All code is in micrpopython**
