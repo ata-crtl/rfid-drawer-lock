@@ -47,6 +47,7 @@ onshape link = https://cad.onshape.com/documents/10ff17bd51048845f2315452/w/f69d
 | OUT-  | VIN + |
 
 <img width="1072" height="660" alt="image" src="https://github.com/user-attachments/assets/afe1f95f-f0ba-45f3-ade6-02342ef7e973" />
+<img width="3507" height="2480" alt="image" src="https://github.com/user-attachments/assets/fde249c5-b53f-4b88-ace4-086fa4f0f500" />
 
 <img width="1067" height="573" alt="image" src="https://github.com/user-attachments/assets/8ab7b69d-2014-4c68-9408-0677734d4523" />
 <img width="877" height="448" alt="Screenshot 2026-04-11 090117" src="https://github.com/user-attachments/assets/7f4565c1-eca5-48d5-8c2e-095fac5fc983" />
