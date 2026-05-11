@@ -23,13 +23,13 @@ onshape link = https://cad.onshape.com/documents/10ff17bd51048845f2315452/w/f69d
 **All code is in micrpopython**
 
 **SCHEMATICS**
-| esp32c3  | 9g SG90 |
+| esp32  | 9g SG90 |
 | ------------- | ------------- |
 | GND | GND |
 | vin  | vcc  |
 | gpio 13 | signal
 
-|esp32c3 | pn53 |
+|esp32 | pn53 |
 | --------|--------|
 | d21 | SDA |
 | D22 | SCL |
