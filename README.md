@@ -1,6 +1,14 @@
-# rfid-drawer-lock
+# rfid-drawer-lock**
+
+
+
+<img width="492" height="727" alt="image" src="https://github.com/user-attachments/assets/f769ca3e-cc4c-4816-a1f2-bf4635f84afb" />
+
+
 My project is a drawer lock with special dimmensions as I have a wierd drawer.
-It doesnt use any screws as i canot afford to drill into the drawer, so every thing is held together by adhesive strips. 
+It doesnt use any screws as i canot afford to drill into the drawer, so every thing is held together by adhesive strips.
+
+Additionaly , because of the restricted space , a lid is not possible as it is made with a 2 mm free space.
 Basically it opens the latch when ever it detects any nfc source near, the range might be a bit short due to the thickness of wood.
 The reason it exists so that i can keep my belongings secure with out going throught the trouble of having my keys lost / stolen.
 Say for example any nfc card / phone can be tapped  and it will open the latch, Tap agin and it will close it. i have not made a white list for which ones are allowed but if someone wants they can make that.
@@ -12,18 +20,20 @@ step 2. attach all the wiring to the componets, make sure the lipo battery is ch
 
 step 3 . place the motor like shown in the  photos above remebering to apply the adhesive strip under it.
 
-step 4 . place the rfid componet against the drawer, but frist test to see if it works, if so then attach all all the components to the drawre and test it again.
+step 4 . place the rfid componet against the drawer, but first test to see if it works, if so then attach all all the components to the drawre and test it again.
 
 
 onshape link = https://cad.onshape.com/documents/10ff17bd51048845f2315452/w/f69d7bc4221a2a5968c6b8fb/e/c57b2dc210264a0650e04200
 
 
 
-<img width="492" height="727" alt="image" src="https://github.com/user-attachments/assets/f769ca3e-cc4c-4816-a1f2-bf4635f84afb" />
+
 
 
 
 **All code is in micrpopython**
+
+
 
 **SCHEMATICS**
 | esp32  | 9g SG90 |
