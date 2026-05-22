@@ -18,7 +18,7 @@ Say for example any nfc card / phone can be tapped  and it will open the latch, 
 
       
    <img width="492" height="727" alt="image" src="https://github.com/user-attachments/assets/f769ca3e-cc4c-4816-a1f2-bf4635f84afb" />      
-
+                **Quick assembly instructions**
          
 Step 1 . place the pinion in the engraved area and place the gear above it on the rod coming out.
 
