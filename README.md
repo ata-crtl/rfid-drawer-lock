@@ -3,17 +3,17 @@
 
 
 <img width="492" height="727" alt="image" src="https://github.com/user-attachments/assets/f769ca3e-cc4c-4816-a1f2-bf4635f84afb" />
+This project is a  RFID drawer lock with special dimensions due to having a weird drawer model .Don't mind the weird arrangement and lack of cover as space is constricted.
+It doesn't use any screws as I cannot afford to drill into the drawer, so everything is held together by adhesive strips.
 
 
-My project is a drawer lock with special dimmensions as I have a wierd drawer.
-It doesnt use any screws as i canot afford to drill into the drawer, so every thing is held together by adhesive strips.
+Additionally , because of the restricted space , a lid is not possible as it is made with a 2 mm free space.
+Basically it opens the latch whenever it detects any nfc source near, the range might be a bit short due to the thickness of wood.
+The reason it exists is so that I can keep my belongings secure without going through the trouble of having my keys lost / stolen.
+Say for example any nfc card / phone can be tapped  and it will open the latch, Tap again and it will close it. I have not made a white list for which ones are allowed but if someone wants they can make that.
+             AND        Remember to have the nfc module up against the wall.
 
-Additionaly , because of the restricted space , a lid is not possible as it is made with a 2 mm free space.
-Basically it opens the latch when ever it detects any nfc source near, the range might be a bit short due to the thickness of wood.
-The reason it exists so that i can keep my belongings secure with out going throught the trouble of having my keys lost / stolen.
-Say for example any nfc card / phone can be tapped  and it will open the latch, Tap agin and it will close it. i have not made a white list for which ones are allowed but if someone wants they can make that.
-                     Remeber to have the nfc module up aginst the wall.
-                     
+                    
 step 1 . place the pinion in the engraved area and place the gear above it on the rod coming out.
 
 step 2. attach all the wiring to the componets, make sure the lipo battery is charged
