@@ -1,7 +1,7 @@
 # RFID Drawer Lock
 
 A custom RFID-controlled drawer lock built around the constraints of a weirdly shaped drawer — 
-no drilling, no screws, 2mm error radius on the prints. Everything is held together with 
+no drilling, no screws, 2mm error radius on the prints due to lack of space. Everything is held together with 
 adhesive strips because that's just how it had to be done.
 
 Tap any NFC card or phone → latch opens. Tap again → latch closes.  
