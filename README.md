@@ -39,7 +39,6 @@ Built in Onshape — [view the model here](https://cad.onshape.com/documents/10f
 4. Test the RFID before sticking everything down permanently. If it works, fix it all in place and test again.
 
 <img width="1072" height="660" alt="Assembly photo" src="https://github.com/user-attachments/assets/afe1f95f-f0ba-45f3-ade6-02342ef7e973" />
-<img width="3507" height="2480" alt="Assembly photo 2" src="https://github.com/user-attachments/assets/fde249c5-b53f-4b88-ace4-086fa4f0f500" />
 <img width="1328" height="511" alt="Assembly photo 3" src="https://github.com/user-attachments/assets/9b8ba526-6064-45fa-adba-47be433c8623" />
 
 
