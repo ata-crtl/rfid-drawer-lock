@@ -12,7 +12,8 @@ No whitelist (anyone with NFC can open it), but that's easy to add if you want i
 
 The whole point of this is to keep my stuff secure without worrying about losing keys.
 
-<img width="435" height="702" alt="image" src="https://github.com/user-attachments/assets/14b46b2d-4369-4373-b8d3-66df6cfde8a7" />
+<img width="306" height="575" alt="Screenshot 2026-05-26 122812" src="https://github.com/user-attachments/assets/63f45e1e-4c5e-486a-a98b-ed9185d07583" />
+
 
 ---
 
