@@ -22,3 +22,4 @@
 |-------------|----------------|
 | OUT+        | VIN-           |
 | OUT-        | VIN+           |
+<img width="3507" height="2480" alt="Assembly photo 2" src="https://github.com/user-attachments/assets/fde249c5-b53f-4b88-ace4-086fa4f0f500" />
