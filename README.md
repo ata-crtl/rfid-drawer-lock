@@ -41,7 +41,6 @@ On first boot you register a card using the on board button. After that, only th
 | Green and Red LEDs       | Status indicators                  |
 | 330 Ω resistors ×2       | LED current limiting               |
 
-Total cost is under about 15 USD if you order parts from AliExpress.
 
 
 
