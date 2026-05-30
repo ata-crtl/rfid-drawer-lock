@@ -1,150 +1,208 @@
+# RFID Drawer Lock
 
+A compact NFC‑controlled drawer lock for when you want privacy without keys, padlocks, or drilling holes in furniture. Tap a card, the servo pulls the latch; tap again, it locks.
 
-#  RFID Drawer Lock
+![PCB render](photos/pcb-render.jpg)
 
-I have a drawer in my room. I wanted it locked. Not because I have anything crazy in there — I just wanted it private. A padlock felt overkill and a key is just another thing to lose. So I built this.
-
-Tap an NFC card, drawer unlocks. Simple.
-
----
-
-## What it actually does
-
-- NFC card or tag unlocks the servo mechanism
--  Green LED tells you it's on
--  Red LED tells you it's locked or your card was rejected
-- Runs on a LiPo battery so no cables needed inside the drawer
-- Charges over USB via the TP4056 module
-- Slide switch to cut power when you don't need it
+> Replace the image paths (`photos/...`) with your actual filenames.
 
 ---
 
-## How it's built
+## What it does
 
-This started on a breadboard and ended up as a custom PCB designed in KiCad. The 3D printed enclosure holds everything together and mounts cleanly inside the drawer — no screws, no drilling, just adhesive.
+- Tap an NFC card or tag to unlock the drawer.
+- Tap again to lock it.
+- Green LED shows the system is powered and ready.
+- Red LED shows the drawer is locked or a card was rejected.
+- Runs from a single 1S LiPo so there are no cables inside the drawer.
+- Charges over USB through a TP4056 module.
+- Slide switch lets you hard‑cut power when you don’t need it.
 
-```
+---
 
+## How it works
+
+The ESP32‑C3 reads the card UID from the PN532 over I²C, compares it to a stored UID, and moves the SG90 servo to either the locked or unlocked position.
+
+```text
 LiPo Battery
      ↓
-TP4056 charger  ←  USB in
+TP4056 Charger   ←  USB in
      ↓
-Slide switch
+Slide Switch
      ↓
 ESP32-C3-DevKitM-1
      ↓           ↓           ↓
-PN532 NFC     SG90 Servo   LEDs
+PN532 NFC     SG90 Servo   Status LEDs
 ```
 
-The ESP32-C3 handles everything. It reads the card UID over I2C from the PN532, checks it against the stored UID, and if it matches it drives the servo to open. Tap again and it locks back.
+On first boot you register a card via the on‑board button. After that, only that card (or any UIDs you add in firmware) can move the servo.
 
 ---
 
-## Parts
+## Hardware overview
 
-| Part | What it does |
-|------|-------------|
-| ESP32-C3-DevKitM-1 | Brain of the whole thing |
-| PN532 NFC module | Reads cards and tags |
-| SG90 servo | Moves the lock |
-| TP4056 module | Charges the battery |
-| 1S LiPo battery | Keeps it wireless |
-| JST-PH 2-pin connector | Battery connection |
-| Slide switch | Power on/off |
-| Green + Red LEDs | Status indicators |
-| 330Ω resistors x2 | LED protection |
+### Main parts
 
-> Total cost is under $15 if you order from AliExpress.
+| Part                     | Role                               |
+|--------------------------|------------------------------------|
+| ESP32‑C3‑DevKitM‑1       | Brain of the lock                  |
+| PN532 NFC module         | Reads NFC cards and tags           |
+| SG90 micro servo         | Moves the latch mechanism          |
+| TP4056 charging module   | Charges the 1S LiPo over USB       |
+| 1S LiPo battery          | Power source                       |
+| JST‑PH 2‑pin connector   | Battery connection                 |
+| Slide switch             | Main power on/off                  |
+| Green + Red LEDs         | Status indicators                  |
+| 330 Ω resistors ×2       | LED current limiting               |
+
+Total cost is under about 15 USD if you order parts from AliExpress.
+
+---
+
+## PCB
+
+The custom PCB holds the ESP32‑C3 module, status LEDs, power switch, and headers for the off‑board modules (PN532, TP4056, servo, and battery).
+
+```text
+Top view:
+- U1: ESP32‑C3‑DevKitM‑1 footprint
+- J_NFC: 4‑pin header for PN532 (I²C)
+- J_SERVO: 3‑pin header for SG90
+- J_TP: 5‑pin header for TP4056
+- J_BAT: 2‑pin JST‑PH for LiPo
+- D1 / D2: Red and green LEDs
+- SW3: Slide power switch
+```
+
+![Enclosure with PCB](photos/enclosure-with-pcb.jpg)
+
+Place the PCB so the slide switch and LEDs line up with the cut‑outs in the printed enclosure.
 
 ---
 
 ## Wiring
 
-| Signal | ESP32-C3 Pin |
-|--------|-------------|
-| PN532 SDA | GPIO6 |
-| PN532 SCL | GPIO7 |
-| Servo signal | GPIO4 |
-| Red LED | GPIO5 |
-| Green LED | 3V3 rail |
+### ESP32‑C3 pinout
+
+| Signal       | ESP32‑C3 Pin |
+|------------- |-------------|
+| PN532 SDA    | GPIO 6      |
+| PN532 SCL    | GPIO 7      |
+| Servo signal | GPIO 4      |
+| Red LED      | GPIO 5      |
+| Green LED    | 3V3 (with resistor to GND) |
+
+Adjust pin names in the firmware if you move any of these.
 
 ---
 
-## Off Board Connections
+### Off‑board connections
 
-These are the physical wires that run from the PCB headers out to each external module.
+The PCB breaks out clean headers for all off‑board modules. These are simple plug‑in connections using dupont leads or crimped JSTs.
 
 <details>
-<summary><b> LiPo Battery → Battery Header (J_BAT)</b></summary>
-<br>
+  <summary><strong>LiPo Battery → Battery Header (J_BAT)</strong></summary>
 
-| Battery Wire | PCB Pin | Notes |
-|-------------|---------|-------|
-| Red (BATT+) | Pin 1 | Positive to TP4056 B+ |
-| Black (BATT-) | Pin 2 | Negative to GND |
+| Battery Wire | PCB Pin | Notes                              |
+|--------------|---------|------------------------------------|
+| Red (BATT+)  | Pin 1   | Positive to TP4056 B+              |
+| Black (BATT−)| Pin 2   | Negative to GND / TP4056 B−        |
 
->  Use the JST-PH connector. Do not reverse polarity — it will damage the battery and TP4056.
-
+Use a JST‑PH connector, and double‑check polarity before plugging in. Reversing the battery can damage the TP4056 and the cell.
 </details>
 
 <details>
-<summary><b> TP4056 Module → TP4056 Header (J_TP)</b></summary>
-<br>
+  <summary><strong>TP4056 Module → TP4056 Header (J_TP)</strong></summary>
 
-| TP4056 Pin | PCB Pin | Notes |
-|------------|---------|-------|
-| GND | Pin 1 | Module ground |
-| OUT+ | Pin 2 | Feeds power to slide switch |
-| OUT- | Pin 3 | GND |
-| B+ | Pin 4 | Goes to battery positive |
-| B- | Pin 5 | Goes to battery negative |
+| TP4056 Pin | PCB Pin | Notes                               |
+|------------|---------|-------------------------------------|
+| GND        | Pin 1   | Module ground                       |
+| OUT+       | Pin 2   | Feeds power to the slide switch     |
+| OUT−       | Pin 3   | Ground                              |
+| B+         | Pin 4   | Connects to battery positive (J_BAT)|
+| B−         | Pin 5   | Connects to battery negative (J_BAT)|
 
-> Plug USB into the TP4056 module directly to charge. Pin 6 is left empty.
-
+Plug USB into the TP4056 directly to charge the battery. Pin 6 on the header is unused.
 </details>
 
 <details>
-<summary><b> PN532 NFC Module → NFC Header (J_NFC)</b></summary>
-<br>
+  <summary><strong>PN532 NFC Module → NFC Header (J_NFC)</strong></summary>
 
-| PN532 Wire | PCB Pin | Notes |
-|-----------|---------|-------|
-| VCC | Pin 1 | 3.3V power |
-| GND | Pin 2 | Ground |
-| SDA | Pin 3 | I2C data → GPIO6 |
-| SCL | Pin 4 | I2C clock → GPIO7 |
+| PN532 Wire | PCB Pin | Notes                          |
+|------------|---------|--------------------------------|
+| VCC        | Pin 1   | 3.3 V power                    |
+| GND        | Pin 2   | Ground                         |
+| SDA        | Pin 3   | I²C data → GPIO 6              |
+| SCL        | Pin 4   | I²C clock → GPIO 7             |
 
-> Make sure your PN532 module has its mode switches set to I2C before plugging in. On most modules that means both switches to ON.
-
+Make sure your PN532 module is configured for I²C (on most boards that means both mode switches set to `ON`) before connecting.
 </details>
 
 <details>
-<summary><b> SG90 Servo → Servo Header (J_SERVO)</b></summary>
-<br>
+  <summary><strong>SG90 Servo → Servo Header (J_SERVO)</strong></summary>
 
-| Servo Wire | PCB Pin | Notes |
-|-----------|---------|-------|
-| Brown (GND) | Pin 1 | Ground |
-| Red (VCC) | Pin 2 | 5V from switched power rail |
-| Orange (Signal) | Pin 3 | PWM signal from GPIO4 |
+| Servo Wire      | PCB Pin | Notes                                 |
+|-----------------|---------|---------------------------------------|
+| Brown (GND)     | Pin 1   | Ground                                |
+| Red (VCC)       | Pin 2   | 5 V from the switched power rail      |
+| Orange (Signal) | Pin 3   | PWM signal from GPIO 4                |
 
-> The servo runs off the switched power rail, not 3.3V. If you feed it 3.3V it will be weak and unreliable.
-
+The servo runs from the 5 V switched rail, not from 3.3 V. Running it from 3.3 V will make it weak and unreliable.
 </details>
 
 ---
 
-## Files in this repo
+## Enclosure and mechanics
 
-```
+The whole assembly is designed to work in a tight drawer, with no drilling into the furniture itself.
 
+![Enclosure external view](photos/enclosure-outside.jpg)
+
+### Mounting the enclosure
+
+- The main body of the enclosure sticks to the inside wall of the drawer using strong double‑sided tape or mounting squares.
+- The PN532 is mounted behind a thin printed “window” in the front facing wall, so you can tap a card from outside the drawer.
+- There is no need to put screws into the drawer; all screws only go into plastic.
+
+### Securing the servo
+
+Inside the enclosure, the SG90 sits in a printed pocket and is clamped down by a separate bracket.
+
+![Servo bracket and latch](photos/servo-bracket.jpg)
+
+- Drop the servo into the recess so its shaft points toward the printed latch arm.
+- Place the U‑shaped bracket over the top of the servo.
+- Use two small self‑tapping screws (for example, 2.5–3 mm plastic screws) from above to fasten the bracket into the printed bosses.
+- Once tightened, the servo cannot jump out even if the drawer is slammed.
+
+The servo horn is then screwed onto the servo shaft as normal and bolts to the printed latch arm.
+
+### Screwing down the lid
+
+The lid is a separate CAD part that closes the enclosure.
+
+![Lid mounting](photos/lid-mounted.jpg)
+
+- After wiring everything and testing, place the lid over the base.
+- Line up the four corner holes in the lid with the matching bosses in the base.
+- Drive four self‑tapping screws straight down into the bosses until the lid is snug. Do not overtighten to avoid cracking PLA.
+- The small grille/vent and LED cut‑outs line up with the PCB LEDs and switch so you can see status and reach the power switch with the lid on.
+
+With the lid screwed down and the servo clamp in place, the whole unit behaves like a single solid module you can stick into the drawer.
+
+---
+
+## Repository layout
+
+```text
 rfid-drawer-lock/
-├── kicad/          KiCad schematic and PCB layout
-├── gerbers/        Ready to send to JLCPCB or PCBWay
-├── cad/            3D models and STEP files for the enclosure
-├── firmware/       Source code
-├── bom/            Bill of materials with links
-├── photos/         Build photos
+├── kicad/          # KiCad schematic and PCB layout
+├── gerbers/        # Ready to upload to JLCPCB / PCBWay
+├── cad/            # 3D models and STEP files for the enclosure
+├── firmware/       # ESP32-C3 firmware
+├── bom/            # Bill of materials with links
+├── photos/         # Build photos for the README
 └── README.md
 ```
 
@@ -152,43 +210,57 @@ rfid-drawer-lock/
 
 ## Building it yourself
 
-### 1. Order the parts
-Everything is in `/bom/` with links. Nothing exotic.
+1. **Order the parts**  
+   Everything is listed in `bom/` with links. Nothing exotic.
 
-### 2. Get the PCB made
-Send `/gerbers/` to JLCPCB or PCBWay. Standard settings — 2 layer, 1.6mm, FR4.
+2. **Get the PCB made**  
+   Send the files in `gerbers/` to JLCPCB or PCBWay. Use standard 2‑layer FR‑4, 1.6 mm thickness, default stack‑up.
 
-### 3. Print the enclosure
-STEP and STL files are in `/cad/`. Printed in PLA at 0.2mm layer height. No supports needed.
+3. **Print the enclosure**  
+   - STEP and STL files are under `cad/`.  
+   - Print in PLA at 0.2 mm layer height.  
+   - No supports are required.
 
-### 4. Solder and assemble
-Solder the pin headers onto the PCB. Plug in the modules. Connect the battery. Mount everything in the printed enclosure.
+4. **Solder and assemble**  
+   - Solder the pin headers and connectors onto the PCB.  
+   - Plug in the PN532, servo, and TP4056 using their headers.  
+   - Connect the LiPo via the JST‑PH connector.  
+   - Drop the servo into its pocket, screw down the bracket, then screw the lid to the base.
 
-### 5. Flash the firmware
+5. **Flash the firmware**
 
-```bash
-git clone https://github.com/yourusername/rfid-drawer-lock
-cd rfid-drawer-lock/firmware
-# Open in Arduino IDE or PlatformIO
-# Board: ESP32-C3 Dev Module
-# Flash and open serial monitor
-```
+   ```bash
+   git clone https://github.com/yourusername/rfid-drawer-lock
+   cd rfid-drawer-lock/firmware
+   # Open in Arduino IDE or PlatformIO
+   # Board: "ESP32C3 Dev Module"
+   # Flash and open the serial monitor
+   ```
 
-### 6. Register your card
-On first boot hold the register button and tap your card. Green LED blinks twice to confirm it saved.
+6. **Register your card**
 
-### 7. Mount it
-Stick it inside your drawer with double sided tape. The PN532 sits flush against the drawer front. Done.
+   - On first boot, hold the register button on the PCB.  
+   - Tap your NFC card on the drawer front.  
+   - The green LED will blink twice to confirm the UID is saved.
+
+7. **Mount it in the drawer**
+
+   - Clean the inside wall of the drawer with isopropyl alcohol.  
+   - Stick the enclosure in place with strong double‑sided tape so the PN532 window is flush with the drawer front.  
+   - Close the drawer, tap your card from the outside, and watch the latch move.
 
 ---
 
-## Customizing it
+## Customizing
 
-- **Different card** — re-register via the button or change the UID in firmware
-- **Multiple cards** — extend the UID list in the code
-- **Servo angles** — adjust open and close angles to fit your lock geometry
-- **WiFi logging** — the ESP32-C3 has WiFi built in, easy to add if you want a log of when the drawer opened
+- **Use a different card** – Hold the register button and re‑tap a new card, or change the UID in firmware.
+- **Allow multiple cards** – Extend the UID list in the firmware to accept several cards or tags.
+- **Adjust servo angles** – Tune the open/close angles in code to match your drawer geometry and latch travel.
+- **Add Wi‑Fi logging** – The ESP32‑C3 has Wi‑Fi built in; you can log open/close events to a server or MQTT broker.
+- **Change indicators** – Swap LED colours or add a buzzer for audio feedback.
 
+---
 
+## Notes
 
-The off board connections are inside `<details>` dropdowns so the page stays clean but everything is there when someone expands it. Just replace `yourusername` with your actual GitHub username before pasting.
+This is a “keep people out of my drawer” project, not a high‑security safe. Do not rely on it to protect valuables; it is meant as a fun, practical embedded project that avoids keys and makes your drawer feel a bit smarter.
