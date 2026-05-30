@@ -181,22 +181,6 @@ With the lid screwed down and the servo clamp in place, the whole unit behaves l
 
 ---
 
-## Repository layout
-
-```text
-rfid-drawer-lock/
-├── kicad/          # KiCad schematic and PCB layout
-├── gerbers/        # Ready to upload to JLCPCB or PCBWay
-├── cad/            # 3D models and STEP files for the enclosure
-├── firmware/       # ESP32 C3 firmware
-├── bom/            # Bill of materials with links
-├── photos/         # Build photos for the README
-└── README.md
-```
-
-
----
-
 ## Building it yourself
 
 1. **Order the parts**  
