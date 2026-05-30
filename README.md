@@ -21,19 +21,6 @@ ONSHAPE LINK=https://cad.onshape.com/documents/10ff17bd51048845f2315452/w/f69d7b
 ## How it works
 
 The ESP32 C3 reads the card UID from the PN532 over I²C, compares it to a stored UID, and moves the SG90 servo to either the locked or unlocked position.
-
-```text
-LiPo Battery
-     ↓
-TP4056 Charger   ←  USB in
-     ↓
-Slide Switch
-     ↓
-ESP32-C3-DevKitM-1
-     ↓           ↓           ↓
-PN532 NFC     SG90 Servo   Status LEDs
-```
-
 On first boot you register a card using the on board button. After that, only that card (or any UIDs you add in firmware) can move the servo.
 
 ---
@@ -138,29 +125,22 @@ The whole assembly is designed to work in a tight drawer, with no drilling into 
 
 ### Mounting the enclosure
 
-- The main body of the enclosure sticks to the inside wall of the drawer using strong double sided tape or mounting squares.
-- The PN532 sits behind a thin printed window in the front facing wall, so you can tap a card from outside the drawer.
+- The main body of the enclosure sticks to the inside wall of the drawer using strong double sided tape.
+- The PN532 gets attached via adhesive strips to the back of the wall.
 - Screws go only into plastic parts, not into the drawer.
 
 ### Securing the servo
 
 Inside the enclosure, the SG90 sits in a printed pocket and is clamped down by a separate bracket.
 
-- Drop the servo into the recess so its shaft points toward the printed latch arm.
+- Drop the servo into the raised platform so its shaft points toward the gear.
 - Place the U shaped bracket over the top of the servo.
-- Use two small self tapping screws (for example 2.5 to 3 mm plastic screws) from above to fasten the bracket into the printed bosses.
+- Use two small self tapping screws  from below to fasten the bracket into the printed bosses.
 - Once tightened, the servo cannot move or jump out even if the drawer is slammed.
-
-The servo horn is then screwed onto the servo shaft as normal and bolts to the printed latch arm.
-
-### Screwing down the lid
-
-The lid is a separate CAD part that closes the enclosure.
 
 - After wiring everything and testing, place the lid over the base.
 - Line up the four corner holes in the lid with the matching bosses in the base.
-- Drive four self tapping screws straight down into the bosses until the lid is snug. Do not overtighten to avoid cracking PLA.
-- The grille and LED cut outs line up with the PCB LEDs and switch so you can see status and reach the power switch with the lid installed.
+- Drive four self tapping screws straight down until tight.
 
 With the lid screwed down and the servo clamp in place, the whole unit behaves like a single solid module that you can stick into the drawer.
 
@@ -168,24 +148,14 @@ With the lid screwed down and the servo clamp in place, the whole unit behaves l
 
 ## Building it yourself
 
-1. **Order the parts**  
-   Everything is listed in `bom/` with links.
 
-2. **Get the PCB made**  
-   Send the files in `gerbers/` to JLCPCB or PCBWay. Use standard 2 layer FR 4, 1.6 mm thickness, default stack up.
-
-3. **Print the enclosure**  
-   - STEP and STL files are under `cad/`.  
-   - Print in PLA at 0.2 mm layer height.  
-   - No supports are required.
-
-4. **Solder and assemble**  
+1. **Solder and assemble**  
    - Solder the pin headers and connectors onto the PCB.  
    - Plug in the PN532, servo, and TP4056 using their headers.  
    - Connect the LiPo via the JST PH connector.  
    - Drop the servo into its pocket, screw down the bracket, then screw the lid to the base.
 
-5. **Flash the firmware**
+2. **Flash the firmware**
 
    ```bash
    git clone https://github.com/yourusername/rfid-drawer-lock
@@ -195,13 +165,13 @@ With the lid screwed down and the servo clamp in place, the whole unit behaves l
    # Flash and open the serial monitor
    ```
 
-6. **Register your card**
+3. **Register your card**
 
    - On first boot, hold the register button on the PCB.  
    - Tap your NFC card on the drawer front.  
    - The green LED will blink twice to confirm the UID is saved.
 
-7. **Mount it in the drawer**
+4. **Mount it in the drawer**
 
    - Clean the inside wall of the drawer with isopropyl alcohol.  
    - Stick the enclosure in place with strong double sided tape so the PN532 window is flush with the drawer front.  
