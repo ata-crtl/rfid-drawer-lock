@@ -54,24 +54,7 @@ On first boot you register a card using the on board button. After that, only th
 
 Total cost is under about 15 USD if you order parts from AliExpress.
 
----
 
-## PCB
-
-The custom PCB holds the ESP32 C3 module, status LEDs, power switch, and headers for the off board modules (PN532, TP4056, servo, and battery).
-
-```text
-Top view:
-- U1: ESP32 C3 DevKitM 1 footprint
-- J_NFC: 4 pin header for PN532 (I²C)
-- J_SERVO: 3 pin header for SG90
-- J_TP: 5 pin header for TP4056
-- J_BAT: 2 pin JST PH for LiPo
-- D1 / D2: Red and green LEDs
-- SW3: Slide power switch
-```
-
-Place the PCB so the slide switch and LEDs line up with the cut outs in the printed enclosure.
 
 ---
 
@@ -179,48 +162,12 @@ The lid is a separate CAD part that closes the enclosure.
 
 With the lid screwed down and the servo clamp in place, the whole unit behaves like a single solid module that you can stick into the drawer.
 
----
 
-## Repository layout
-
-```text
-rfid-drawer-lock/
-├── kicad/          # KiCad schematic and PCB layout
-├── gerbers/        # Ready to upload to JLCPCB or PCBWay
-├── cad/            # 3D models and STEP files for the enclosure
-├── firmware/       # ESP32 C3 firmware
-├── bom/            # Bill of materials with links
-├── photos/         # Build photos for the README
-└── README.md
-```
-
----
-
-## Photos
-
-All photos are kept in `photos/` so you only have to manage them in one place.  
-Rename the files as needed or adjust the paths here.
-
-```md
-
-
-
-
-```
-
-Suggested mapping for the four renders:
-
-- `pcb-render.jpg` shows the PCB with headers, LEDs, switch, and logo.
-- `enclosure-assembly.jpg` shows the enclosure body with the servo and internal geometry.
-- `enclosure-side-pn532.jpg` shows the side view with the PN532 board lining up with the slot.
-- `enclosure-lid-latch.jpg` shows the enclosure with the lid open and the latch arm visible.
-
----
 
 ## Building it yourself
 
 1. **Order the parts**  
-   Everything is listed in `bom/` with links. Nothing exotic.
+   Everything is listed in `bom/` with links.
 
 2. **Get the PCB made**  
    Send the files in `gerbers/` to JLCPCB or PCBWay. Use standard 2 layer FR 4, 1.6 mm thickness, default stack up.
@@ -268,8 +215,3 @@ Suggested mapping for the four renders:
 - **Add Wi Fi logging** – The ESP32 C3 has Wi Fi built in, so you can log open and close events to a server or MQTT broker.
 - **Change indicators** – Swap LED colours or add a buzzer for audio feedback.
 
----
-
-## Notes
-
-This is a "keep people out of my drawer" project, not a high security safe. Do not rely on it to protect valuables, it is meant as a fun, practical embedded project that avoids keys and makes your drawer feel a bit smarter.
