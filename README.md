@@ -2,6 +2,7 @@
 
 A compact NFC controlled drawer lock for when you want privacy without keys, padlocks, or drilling holes in furniture. Tap a card, the servo pulls the latch; tap again, it locks.
 
+**ONSHAPE LINK=https://cad.onshape.com/documents/10ff17bd51048845f2315452/w/f69d7bc4221a2a5968c6b8fb/e/c57b2dc210264a0650e04200?renderMode=0&uiState=6a1b3afc93bd5ce1c5f2ef79**
 ---
 
 ## What it does
