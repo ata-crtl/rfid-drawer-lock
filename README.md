@@ -181,6 +181,42 @@ With the lid screwed down and the servo clamp in place, the whole unit behaves l
 
 ---
 
+## Repository layout
+
+```text
+rfid-drawer-lock/
+├── kicad/          # KiCad schematic and PCB layout
+├── gerbers/        # Ready to upload to JLCPCB or PCBWay
+├── cad/            # 3D models and STEP files for the enclosure
+├── firmware/       # ESP32 C3 firmware
+├── bom/            # Bill of materials with links
+├── photos/         # Build photos for the README
+└── README.md
+```
+
+---
+
+## Photos
+
+All photos are kept in `photos/` so you only have to manage them in one place.  
+Rename the files as needed or adjust the paths here.
+
+```md
+
+
+
+
+```
+
+Suggested mapping for the four renders:
+
+- `pcb-render.jpg` shows the PCB with headers, LEDs, switch, and logo.
+- `enclosure-assembly.jpg` shows the enclosure body with the servo and internal geometry.
+- `enclosure-side-pn532.jpg` shows the side view with the PN532 board lining up with the slot.
+- `enclosure-lid-latch.jpg` shows the enclosure with the lid open and the latch arm visible.
+
+---
+
 ## Building it yourself
 
 1. **Order the parts**  
