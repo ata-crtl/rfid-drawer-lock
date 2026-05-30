@@ -1,6 +1,3 @@
-Here is the full README ready to copy paste directly into GitHub:
-
----
 
 ```markdown
 #  RFID Drawer Lock
