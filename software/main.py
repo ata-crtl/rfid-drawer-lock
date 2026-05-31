@@ -1,106 +1,128 @@
-# main.py — NFC Drawer Lock
-# ESP32-C3 + PN532 (I2C) + Servo (rack & pinion)
+# pn532.py — MicroPython PN532 NFC driver (I2C)
+# ESP32-C3-DevKitM-1 — GPIO6 SDA, GPIO7 SCL
 
-from machine import Pin, PWM, I2C
+from machine import I2C
 import time
-from pn532 import PN532, PN532Error
 
-# ── Pin assignments ────────────────────────────────────────────
-SERVO_PIN = 13   # Servo signal
-SDA_PIN   = 21   # PN532 SDA
-SCL_PIN   = 22   # PN532 SCL
+# Constants
+_ADDR = 0x24                     # Default PN532 I2C address
+_PREAMBLE = 0x00
+_STARTCODE = b'\x00\xFF'
+_POSTAMBLE = 0x00
+_TFI_OUT = 0xD4                  # Host -> PN532
+_TFI_IN = 0xD5                   # PN532 -> Host
+_ACK_FRAME = b'\x00\x00\xFF\x00\xFF\x00'
 
-# ── Servo angles (rack & pinion) ──────────────────────────────
-# Clockwise → rack extends → bolt locks → higher angle = locked
-#
-# ┌─ CALIBRATION ───────────────────────────────────────────────┐
-# │ If rack doesn't fully extend when locking:                 │
-# │   → increase LOCKED_DEG in 10° steps (max ~170°)           │
-# │ If rack doesn't fully retract when unlocking:              │
-# │   → decrease UNLOCKED_DEG in 10° steps (min ~10°)          │
-# │ Leave ~5° margin at each end — stalling kills the motor.   │
-# └─────────────────────────────────────────────────────────────┘
-LOCKED_DEG   = 90
-UNLOCKED_DEG = 0
-
-# ── Timing ────────────────────────────────────────────────────
-DEBOUNCE_MS = 800
-SCAN_MS     = 100
+CMD_SAMCONFIG = 0x14             # Configure SAM
+CMD_INLISTPASSIVE = 0x4A         # Detect passive targets
+BAUD_ISO14443A = 0x00            # 106 kbps, works for Mifare/NTAG/most NFC tags
 
 
-# ═════════════════════════════════════════════════════════════
-# SERVO
-# ═════════════════════════════════════════════════════════════
-
-servo = PWM(Pin(SERVO_PIN), freq=50)
-
-def _angle_to_duty(deg):
-    return int(26 + (deg / 180.0) * (128 - 26))
-
-def move_servo(deg):
-    servo.duty(_angle_to_duty(deg))
+def _lcs(length):
+    return (~length + 1) & 0xFF
 
 
-# ═════════════════════════════════════════════════════════════
-# LOCK STATE
-# ═════════════════════════════════════════════════════════════
-
-locked = True
-move_servo(LOCKED_DEG)
-print("[BOOT] Drawer LOCKED. Waiting for NFC card...")
-
-def toggle_lock():
-    global locked
-    if locked:
-        move_servo(UNLOCKED_DEG)
-        locked = False
-        print("[NFC]  Card detected → UNLOCKED")
-    else:
-        move_servo(LOCKED_DEG)
-        locked = True
-        print("[NFC]  Card detected → LOCKED")
+def _dcs(data):
+    return (~sum(data) + 1) & 0xFF
 
 
-# ═════════════════════════════════════════════════════════════
-# NFC SETUP
-# ═════════════════════════════════════════════════════════════
-
-i2c = I2C(0, sda=Pin(SDA_PIN), scl=Pin(SCL_PIN), freq=100_000)
-
-devices = i2c.scan()
-print("[I2C]  Devices found:", ["0x{:02X}".format(d) for d in devices])
-if 0x24 not in devices:
-    print("[ERR]  PN532 not found at 0x24. Check wiring.")
-    raise SystemExit
-
-nfc = PN532(i2c)
-try:
-    nfc.SAM_configuration()
-    print("[NFC]  PN532 ready. Scan any card to lock/unlock.")
-except PN532Error as e:
-    print("[ERR]  SAM config failed:", e)
-    raise SystemExit
+def _build_frame(cmd, params=()):
+    body = bytes([_TFI_OUT, cmd]) + bytes(params)
+    length = len(body)
+    return (
+        bytes([_PREAMBLE]) +
+        _STARTCODE +
+        bytes([length, _lcs(length)]) +
+        body +
+        bytes([_dcs(body), _POSTAMBLE])
+    )
 
 
-# ═════════════════════════════════════════════════════════════
-# MAIN LOOP
-# ═════════════════════════════════════════════════════════════
+class PN532Error(Exception):
+    pass
 
-last_trigger = time.ticks_ms()
 
-while True:
-    try:
-        uid = nfc.read_passive_target(timeout_ms=300)
-    except PN532Error as e:
-        print("[ERR]  Read error:", e)
-        time.sleep_ms(500)
-        continue
+class PN532:
+    def __init__(self, i2c, addr=_ADDR):
+        self._i2c = i2c
+        self._addr = addr
 
-    now = time.ticks_ms()
+    def _wait_ready(self, timeout_ms=1000):
+        """Wait until the PN532 sets the ready bit."""
+        deadline = time.ticks_add(time.ticks_ms(), timeout_ms)
 
-    if uid and time.ticks_diff(now, last_trigger) > DEBOUNCE_MS:
-        print("[NFC]  UID:", " ".join("{:02X}".format(b) for b in uid))
-        toggle_lock()
-        last_trigger = now
+        while time.ticks_diff(deadline, time.ticks_ms()) > 0:
+            try:
+                status = self._i2c.readfrom(self._addr, 1)[0]
+                if status & 0x01:
+                    return True
+            except OSError:
+                pass
 
-    time.sleep_ms(SCAN_MS)
+            time.sleep_ms(10)
+
+        return False
+
+    def _send_cmd(self, cmd, params=()):
+        """Send a command frame and check for ACK."""
+        frame = _build_frame(cmd, params)
+        self._i2c.writeto(self._addr, frame)
+        time.sleep_ms(5)
+
+        if not self._wait_ready(500):
+            raise PN532Error("Timeout waiting for ACK after cmd 0x{:02X}".format(cmd))
+
+        ack = self._i2c.readfrom(self._addr, 7)
+        if ack[1:7] != _ACK_FRAME:
+            raise PN532Error("Bad ACK: {}".format(list(ack)))
+
+    def _read_response(self, payload_len, timeout_ms=1000):
+        """Read a response frame and return just the payload."""
+        if not self._wait_ready(timeout_ms):
+            return None
+
+        buf = self._i2c.readfrom(self._addr, payload_len + 9)
+        return bytes(buf[8:8 + payload_len])
+
+    def SAM_configuration(self):
+        """
+        Put the PN532 into normal mode.
+        Call this once after power-on before scanning.
+        """
+        self._send_cmd(CMD_SAMCONFIG, (0x01, 0x14, 0x01))
+        self._read_response(0, timeout_ms=500)
+
+    def read_passive_target(self, timeout_ms=500):
+        """
+        Scan for one ISO14443A card or tag.
+        Returns the UID as bytes, or None if nothing is found.
+        Works with Mifare Classic, NTAG, and most 13.56 MHz cards.
+        """
+        self._send_cmd(CMD_INLISTPASSIVE, (0x01, BAUD_ISO14443A))
+
+        deadline = time.ticks_add(time.ticks_ms(), timeout_ms)
+        while time.ticks_diff(deadline, time.ticks_ms()) > 0:
+            try:
+                status = self._i2c.readfrom(self._addr, 1)[0]
+                if status & 0x01:
+                    break
+            except OSError:
+                pass
+
+            time.sleep_ms(20)
+        else:
+            return None
+
+        buf = self._i2c.readfrom(self._addr, 20)
+
+        if len(buf) < 15:
+            return None
+
+        if buf[8] == 0:
+            return None
+
+        uid_len = buf[13]
+        if len(buf) < 14 + uid_len:
+            return None
+
+        return bytes(buf[14:14 + uid_len])
