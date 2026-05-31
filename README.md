@@ -28,6 +28,7 @@ On first boot you register a card using the on board button. After that, only th
 ---
 
 ## Hardware overview
+<img width="14030" height="9923" alt="image" src="https://github.com/user-attachments/assets/2ddba26a-29d7-4dce-9cc4-513a62371cd2" />
 
 ### Main parts
 
