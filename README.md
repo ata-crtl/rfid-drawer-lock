@@ -5,7 +5,8 @@ A compact NFC controlled drawer lock for when you want privacy without keys, pad
 ONSHAPE LINK=https://cad.onshape.com/documents/10ff17bd51048845f2315452/w/f69d7bc4221a2a5968c6b8fb/e/c57b2dc210264a0650e04200?renderMode=0&uiState=6a1b3afc93bd5ce1c5f2ef79
 
 ---
-<img width="359" height="684" alt="image" src="https://github.com/user-attachments/assets/b4b99f5a-1a05-45c1-9468-d03832a1b9c6" />
+<img width="411" height="586" alt="Screenshot 2026-06-01 223042" src="https://github.com/user-attachments/assets/ecabc02c-fc4f-4b05-a81c-cce5e2e75a1d" />
+
 
 
 ## What it does
