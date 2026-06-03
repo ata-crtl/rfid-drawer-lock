@@ -62,7 +62,7 @@ There is also a button for setup so you can register a card easily.
 
 The green LED is connected directly to the power rail through a resistor.
 
-Make sure the PN532 is set to I2C mode before wiring it up, as some modules default to SPI.
+Make sure the PN532 is set to I2C mode before wiring it up
 
 ---
 
@@ -97,11 +97,10 @@ Open the project in Arduino IDE or PlatformIO and upload it to the ESP32.
 
 ## Installation
 
-The enclosure is designed to stick to the inside of a drawer using strong double-sided tape.
+The enclosure is made to stick to the inside of a drawer using strong double-sided tape.
 
-The NFC reader sits behind the drawer front so you can scan cards from outside.
+The NFC reader sits behind the drawer front , in a little pocket so you can scan cards from outside.
 
-No permanent modifications to the furniture are needed.
 - Double check battery polarity before connecting  
 - Power the servo from 5V, not 3.3V  
 - Check PN532 mode (I2C vs SPI) before use  
