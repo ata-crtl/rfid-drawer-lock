@@ -11,7 +11,8 @@ I made this because I wanted a way to lock a drawer without dealing with keys or
 [View the Onshape model](https://cad.onshape.com/documents/10ff17bd51048845f2315452/w/f69d7bc4221a2a5968c6b8fb/e/c57b2dc210264a0650e04200)
 
 
-<img width="365" height="523" alt="image" src="https://github.com/user-attachments/assets/145c2482-ebe9-4971-aaad-ff4bd44a3c99" />
+<img width="437" height="622" alt="image" src="https://github.com/user-attachments/assets/1d09c673-e126-4e09-9555-aba102f89377" />
+
 
 ---
 
