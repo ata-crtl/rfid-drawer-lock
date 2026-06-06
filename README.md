@@ -104,7 +104,7 @@ The NFC reader sits behind the drawer front , in a little pocket so you can scan
 
 - Double check battery polarity before connecting  
 - Power the servo from 5V, not 3.3V  
-- Check PN532 mode (I2C vs SPI) before use  
+- Check PN532 mode 
 ---
 
 ## Future improvements
