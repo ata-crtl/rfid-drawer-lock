@@ -13,8 +13,10 @@ I made this because I wanted a way to lock a drawer without dealing with keys or
 
 <img width="513" height="707" alt="image" src="https://github.com/user-attachments/assets/4da04cec-02f2-465b-ae0b-43c6dc9259fe" />
 
+<img width="14030" height="9923" alt="Assembly 1 (24)" src="https://github.com/user-attachments/assets/3d7fd2b5-a230-4d63-98c3-936bc86da36d" />
 
 
+<img width="14030" height="9923" alt="Assembly 1 (22)" src="https://github.com/user-attachments/assets/1ffee8a5-2524-46b8-b405-c629f7478c2b" />
 
 ---
 
