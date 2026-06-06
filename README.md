@@ -8,7 +8,7 @@ A simple NFC drawer lock built using an ESP32-C3, PN532 NFC reader, and an SG90 
 I made this because I wanted a way to lock a drawer without dealing with keys or drilling into furniture , i always seem to lose my keys and lock myself out :( . Just tap an authorised NFC card to unlock it, and tap again to lock it.
 
 **Onshape link:**  
-[View the Onshape model](https://cad.onshape.com/documents/10ff17bd51048845f2315452/w/f69d7bc4221a2a5968c6b8fb/e/c57b2dc210264a0650e04200)
+[View the Onshape model](https://cad.onshape.com/documents/10ff17bd51048845f2315452/w/f69d7bc4221a2a5968c6b8fb/e/c57b2dc210264a0650e04200?renderMode=0&uiState=6a241e387df4bc474adedac2)
 
 
 <img width="513" height="707" alt="image" src="https://github.com/user-attachments/assets/4da04cec-02f2-465b-ae0b-43c6dc9259fe" />
