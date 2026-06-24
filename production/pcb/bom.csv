@@ -1,0 +1,10 @@
+﻿Designator,Footprint,Quantity,Value,LCSC Part #
+D1,LED_D3.0mm,1,GREEN,
+D2,LED_D3.0mm,1,RED,
+J1,PinHeader_1x04_P2.54mm_Vertical,1,NFC,
+J2,FanPinHeader_1x03_P2.54mm_Vertical,1,sg90 servo motor,
+J5,PinHeader_1x02_P2.54mm_Vertical,1,Battery jst header,
+J7,PinHeader_1x06_P2.54mm_Vertical,1,TP4056,
+"R3, R4",0805,2,330,
+SW3,SW_Slide_SPDT_Angled_CK_OS102011MA1Q,1,POWER,
+U1,ESP32-C3-DevKitM-1,1,ESP32-C3-DevKitM-1,
