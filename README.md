@@ -45,7 +45,7 @@ There is also a button for setup so you can register a card easily.
 
 ### Parts Used
 
-- ESP32 DevKitM-1 for the main controller  
+- ESP32 DevKitM1 for the main controller  
 - PN532 NFC module for reading cards  
 - SG90 servo to move the lock  
 - TP4056 module for charging the battery  
@@ -56,18 +56,6 @@ There is also a button for setup so you can register a card easily.
 - 330Ω resistors (x2) for LED current limiting  
 
 ---
-
-## Wiring
-
-- PN532 SDA  to  GPIO 6  
-- PN532 SCL  to GPIO 7  
-- Servo signal  to  GPIO 4  
-- Red LED  to  GPIO 5  
-
-The green LED is connected directly to the power rail through a resistor.
-
-Make sure the PN532 is set to I2C mode before wiring it up
-
 ---
 
 ## Building
